@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="result.css">
+<title>Result</title>
+
+</head>
+<body>
+ <nav>
+        <div class="nav-container">
+            <div class="logo">
+<span class="logo-icon">🩺</span>
+                <span> Smart medical Prediction</span>
+            </div>
+            <div class="nav-links">
+                <a href="welcom.html" class="nav-link ">Home</a>
+                <a href="symptoms.html" class="nav-link">Symptoms</a>
+                <a href="result.html" class="nav-link active">Results</a>
+                <a href="Advice.html" class="nav-link "> General Advice</a>
+            </div>
+            
+        </div>
+    </nav>
+<div class="container">
+<h3> Expected Result</h3>
+
+<div class="card">
+        <div id="disease"></div>
+        <div id="probability"></div>
+    </div>
+
+    <div class="card">
+        <h3>Information</h3>
+        <p id="info"></p>
+    </div>
+
+    <div class="card">
+        <p id="disclaimer">disclaimer</p>
+    </div>
+</div>
+<div class="advice-container">
+    <h2>🌟This result is preliminary only.
+Consulting a qualified physician is strongly advised for a proper diagnosis.</h2>
+    </div>
+
+<script>
+// قراءة البيانات من localStorage
+const data = JSON.parse(localStorage.getItem("resultData")) || {};
+// عرض النتيجة
+
+document.getElementById("disease").textContent = data.main_decision?.label|| data.target_disease||"no result";
+
+    document.getElementById("probability").textContent =
+        "Probability: " + (data.probability * 100).toFixed(1) + "%";
+
+//  المعلومات
+document.getElementById("info").textContent =
+    data.educational_info ;
+//عرض التنويه
+document.getElementById("disclaimer").textContent =
+    data.disclaimer ;
+</script>
+
+</body>
+</html>
