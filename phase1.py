@@ -13,7 +13,7 @@ from sklearn.metrics import (
 from sklearn.model_selection import train_test_split
 
 # 1) Load + clean
-DATA_PATH = r"./DataSet/Disease and symptoms dataset (Copy).csv"
+DATA_PATH = r"/home/hertz/4thP/DataSet/Disease and symptoms dataset (Copy).csv"
 TESTS_DIR = r"./tests"
 
 df = pd.read_csv(DATA_PATH).drop_duplicates().copy()

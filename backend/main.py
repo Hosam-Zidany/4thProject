@@ -15,16 +15,18 @@ app.add_middleware(
 )
 
 try:
-    with open('models/anxiety_model.pkl', 'rb') as f:
+    with open("/home/hertz/4thP/backend/models/anxiety_model.pkl", "rb") as f:
         model = pickle.load(f)
-    with open('models/feature_columns.pkl', 'rb') as f:
+    with open("/home/hertz/4thP/backend/models/feature_columns.pkl", "rb") as f:
         feature_columns = pickle.load(f)
     print("Model and columns loaded successfully.")
 except Exception as e:
     print(f"Error loading files: {e}")
 
+
 def _normalize_key(key: str) -> str:
-    return re.sub(r'[^a-z0-9]', '', str(key).lower())
+    return re.sub(r"[^a-z0-9]", "", str(key).lower())
+
 
 @app.post("/predict")
 async def predict(data: dict):
@@ -54,22 +56,24 @@ async def predict(data: dict):
         print(f"Total activated features: {activated_count}")
 
         probability = model.predict_proba(full_input)[0][1]
-        
+
         thresholds = [0.2, 0.4, 0.5, 0.7, 0.9]
         analysis = []
         for t in thresholds:
             is_anxiety = bool(probability >= t)
-            analysis.append({
-                "threshold": t,
-                "is_anxiety": is_anxiety,
-                "prediction": "Anxiety Detected" if is_anxiety else "Not Anxiety"
-            })
+            analysis.append(
+                {
+                    "threshold": t,
+                    "is_anxiety": is_anxiety,
+                    "prediction": "Anxiety Detected" if is_anxiety else "Not Anxiety",
+                }
+            )
 
         return {
             "probability": float(probability),
             "target_disease": "anxiety",
             "threshold_analysis": analysis,
-            "disclaimer": "This is a preliminary analysis. Please consult a professional."
+            "disclaimer": "This is a preliminary analysis. Please consult a professional.",
         }
 
     except Exception as e:
@@ -79,4 +83,5 @@ async def predict(data: dict):
 
 if __name__ == "__main__":
     import uvicorn
+
     uvicorn.run(app, host="0.0.0.0", port=8000)

@@ -11,7 +11,7 @@ from sklearn.metrics import (
 )
 from sklearn.model_selection import train_test_split
 
-DATA_PATH = r"./DataSet/Disease and symptoms dataset (Copy).csv"
+DATA_PATH = r"/home/hertz/4thP/DataSet/Disease and symptoms dataset (Copy).csv"
 
 df = pd.read_csv(DATA_PATH)
 sys = df.columns.drop("diseases")
